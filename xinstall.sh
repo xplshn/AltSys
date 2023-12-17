@@ -1,3 +1,4 @@
+FILESDIR=$PWD
 AR="zig ar"
 chroot-git clone https://git.suckless.org/sbase/ &&
 cd sbase &&
