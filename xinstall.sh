@@ -11,15 +11,15 @@ check_pkg() {
                     if [ -z "$ALTERNATIVE_OBLIGATORY" ]; then
                         ALTERNATIVE_OBLIGATORY="$pkg"
                     else
-                        MISSING_OBLIGATORY="$MISSING_OBLIGATORY $pkg"
+                        MISSING_OBLIGATORY="$pkg"
                     fi
                     ;;
                 source-highlight )
-                    MISSING_OPTIONAL="$MISSING_OPTIONAL $pkg"
+                    MISSING_OPTIONAL="$pkg"
                     ;;
                 curl | sox | mpg123 )
                     if ! command -v curl >/dev/null 2>&1 && ! command -v sox >/dev/null 2>&1 && ! command -v mpg123 >/dev/null 2>&1; then
-                        MISSING_OPTIONAL="$MISSING_OPTIONAL $pkg"
+                        MISSING_OPTIONAL="$pkg"
                     fi
                     ;;
             esac
@@ -27,15 +27,13 @@ check_pkg() {
     done
 
     if [ -n "$MISSING_OBLIGATORY" ]; then
-        printf "Missing either %s or %s\n" "$ALTERNATIVE_OBLIGATORY" "$MISSING_OBLIGATORY"
+        printf "Missing both chroot-git and git\n"
+    elif [ -n "$ALTERNATIVE_OBLIGATORY" ]; then
+        GIT_CMD="$ALTERNATIVE_OBLIGATORY"
     fi
 
     if [ -n "$MISSING_OPTIONAL" ]; then
-        printf "Missing optional dependencies: %s\n" "$MISSING_OPTIONAL"
-    fi
-
-    if [ -n "$ALTERNATIVE_OBLIGATORY" ]; then
-        GIT_CMD="$ALTERNATIVE_OBLIGATORY"
+        printf "Missing optional dependency: %s\n" "$MISSING_OPTIONAL"
     fi
 
     if ! command -v ksh >/dev/null 2>&1; then
@@ -45,6 +43,10 @@ check_pkg() {
 
 # Call the function with both obligatory and optional dependencies
 check_pkg chroot-git git source-highlight curl sox mpg123
+
+if [ -z "$GIT_CMD" ]; then
+    echo "Missing either chroot-git or git to clone repositories."
+fi
 
 FILESDIR=$PWD
 AR="zig ar"
