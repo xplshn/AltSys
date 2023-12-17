@@ -55,3 +55,4 @@ cp -r bin/* /bin/ &&
 ksh ./SOURCES.sh 2>/dev/null || sh ./SOURCES.sh 2>/dev/null || cat SOURCES &&
 cd .. &&
 echo "You are now running an Alt(tered)Sys. Files at /opt/AltSys. Some files at /etc and /bin have been modified."
+/opt/AltSys/misc/bin/cowsay "You've done it, Ronny boy! You have liberated yourself from GPL3 (at least on your coreutils)! Now the interesting question is... Now... What do we do with all this space available? I mean, yes, we finally have a UNIX environment(Change the order of PATH, to UBASE>SBASE>TOYBOX for a more UNIXY and 'HARDCORE' experience) in a Linux distro, isn't this 'the dream'?"
