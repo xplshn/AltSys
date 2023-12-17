@@ -7,7 +7,7 @@
 $ sudo -i || su
 # xbps-install -yu make zig libutf8proc-devel binutils clang zlib-devel libtls-devel mold libutf8proc-devel coreutils sed tree
 # git clone https://github.com/xplshn/AltSys/ || chroot-git clone https://github.com/xplshn/AltSys/
-# cd AltSys && sh ./xinstall.sh && xbps-remove -ORo make zig libutf8proc-devel binutils clang zlib-devel libtls-devel mold binutils libutf8proc-devel coreutils
+# cd AltSys && sh ./xinstall.sh && xbps-remove -ORo make zig sed libutf8proc-devel binutils clang zlib-devel libtls-devel mold binutils libutf8proc-devel coreutils
 # tree /opt/AltSys
 # exit
 ```
