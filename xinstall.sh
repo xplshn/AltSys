@@ -1,14 +1,18 @@
 #!/bin/sh
 check_pkg() {
     MISSING_OBLIGATORY=""
+    ALTERNATIVE_OBLIGATORY=""
     MISSING_OPTIONAL=""
-    ALTERNATIVE_OPTIONAL=""
 
     for pkg in "$@"; do
         if ! command -v "$pkg" >/dev/null 2>&1; then
             case $pkg in
                 chroot-git | git )
-                    MISSING_OBLIGATORY="$MISSING_OBLIGATORY $pkg"
+                    if [ -z "$ALTERNATIVE_OBLIGATORY" ]; then
+                        ALTERNATIVE_OBLIGATORY="$pkg"
+                    else
+                        MISSING_OBLIGATORY="$MISSING_OBLIGATORY $pkg"
+                    fi
                     ;;
                 source-highlight )
                     MISSING_OPTIONAL="$MISSING_OPTIONAL $pkg"
@@ -16,8 +20,6 @@ check_pkg() {
                 curl | sox | mpg123 )
                     if ! command -v curl >/dev/null 2>&1 && ! command -v sox >/dev/null 2>&1 && ! command -v mpg123 >/dev/null 2>&1; then
                         MISSING_OPTIONAL="$MISSING_OPTIONAL $pkg"
-                    else
-                        ALTERNATIVE_OPTIONAL="$ALTERNATIVE_OPTIONAL $pkg"
                     fi
                     ;;
             esac
@@ -25,15 +27,15 @@ check_pkg() {
     done
 
     if [ -n "$MISSING_OBLIGATORY" ]; then
-        printf "Missing obligatory dependencies:%s\n" "$MISSING_OBLIGATORY"
+        printf "Missing either %s or %s\n" "$ALTERNATIVE_OBLIGATORY" "$MISSING_OBLIGATORY"
     fi
 
     if [ -n "$MISSING_OPTIONAL" ]; then
-        if [ -n "$ALTERNATIVE_OPTIONAL" ]; then
-            printf "Missing either %s or %s\n" "$ALTERNATIVE_OPTIONAL"
-        else
-            printf "Missing optional dependencies:%s\n" "$MISSING_OPTIONAL"
-        fi
+        printf "Missing optional dependencies:%s\n" "$MISSING_OPTIONAL"
+    fi
+
+    if [ -n "$ALTERNATIVE_OBLIGATORY" ]; then
+        GIT_CMD="$ALTERNATIVE_OBLIGATORY"
     fi
 
     if ! command -v ksh >/dev/null 2>&1; then
@@ -46,7 +48,7 @@ check_pkg chroot-git git source-highlight curl sox mpg123
 
 FILESDIR=$PWD
 AR="zig ar"
-chroot-git clone https://git.suckless.org/sbase/ &&
+$GIT_CMD clone https://git.suckless.org/sbase/ &&
 cd sbase &&
 cp ${FILESDIR}/sbase_mkproto ./scripts/mkproto &&
 CC="zig cc" CFLAGS="-static" LD="mold" make -j1 &&
@@ -56,20 +58,20 @@ echo "SBASE NOW AVAILABLE AT /opt/AltSys/obase/sbase/"
 mkdir -p /opt/AltSys/obase/sbase/share/man/
 mv /opt/AltSys/obase/sbase/man /opt/AltSys/obase/sbase/share/man
 echo "SBASE's manpages are at /opt/AltSys/obase/sbase/share/man/"
-chroot-git clone https://github.com/landley/toybox &&
+$GIT_CMD clone https://github.com/landley/toybox &&
 cd toybox &&
 cp -u ${FILESDIR}/toybox_config .config &&
 CC="clang" CXX="clang++" CFLAGS="-static -O2 -pipe" PREFIX="/opt/AltSys/toybox/" LD="mold" make -j1 install &&
 cd .. &&
 echo "TOYBOX NOW AVAILABLE AT /opt/AltSys/toybox" &&
-chroot-git clone https://git.suckless.org/ubase/ &&
+$GIT_CMD clone https://git.suckless.org/ubase/ &&
 cd ubase &&
 cp ${FILESDIR}/ubase_makefile ./Makefile &&
 CC="zig cc" CFLAGS="-static" LD="mold" PREFIX="/opt/AltSys/obase/ubase" MANPREFIX="/opt/AltSys/obase/ubase/share/man" make -j1 install &&
 cd .. &&
 echo "UBASE NOW AVAILABLE AT /opt/AltSys/obase/ubase/"
 echo "UBASE's manpages are at /opt/AltSys/obase/ubase/share/man/"
-chroot-git clone https://github.com/xplshn/AltSys &&
+$GIT_CMD clone https://github.com/xplshn/AltSys &&
 cd AltSys &&
 mkdir -p /opt/AltSys/misc/ &&
 cp -ru misc/* /opt/AltSys/misc/ &&
