@@ -1,0 +1,71 @@
+# /etc/profile
+
+# System wide environment and startup programs.
+
+#echo $PATH
+PATH=""
+
+appendpath () {
+    case ":$PATH:" in
+        *:"$1":*)
+            ;;
+        *)
+            PATH="${PATH:+$PATH:}$1"
+    esac
+}
+
+
+# Check if /usr/bin/ls(coreutils) exists
+if [ -x /usr/bin/ls ]; then
+	appendpath '/usr/local/sbin'
+	appendpath '/usr/local/bin'
+	appendpath '/usr/bin'
+	appendpath '/usr/sbin'
+	appendpath '/sbin'
+	appendpath '/bin'
+	# Do not change these.#########################
+	appendpath '/opt/AltSys/core/usr/bin'
+	appendpath '/opt/AltSys/toybox/bin'
+	appendpath '/opt/AltSys/toybox/sbin'
+	appendpath '/opt/AltSys/toybox/usr/bin'
+	appendpath '/opt/AltSys/toybox/usr/sbin'
+	appendpath '/opt/AltSys/misc/bin'
+	appendpath '/opt/AltSys/obase/sbase'
+	appendpath '/opt/AltSys/obase/ubase'
+	# The commands from /opt/AltSys take presence.#
+	# NOTE: For a more Posixy shell, move the sbase and ubase to the top.
+else
+	# Do not change these.#########################
+	appendpath '/opt/AltSys/core/usr/bin'
+	appendpath '/opt/AltSys/toybox/bin'
+	appendpath '/opt/AltSys/toybox/sbin'
+	appendpath '/opt/AltSys/toybox/usr/bin'
+	appendpath '/opt/AltSys/toybox/usr/sbin'
+	appendpath '/opt/AltSys/misc/bin'
+	appendpath '/opt/AltSys/obase/sbase'
+	appendpath '/opt/AltSys/obase/ubase'
+	# The commands from /opt/AltSys take presence.#
+	# NOTE: For a more Posixy shell, move the sbase and ubase to the top.
+	appendpath '/usr/local/sbin'
+	appendpath '/usr/local/bin'
+	appendpath '/usr/bin'
+	appendpath '/usr/sbin'
+	appendpath '/sbin'
+	appendpath '/bin'
+    
+fi
+
+unset appendpath
+
+export PATH
+
+# Set default umask
+umask 022
+
+# Load profiles from /etc/profile.d
+if [ -d /etc/profile.d/ ]; then
+    for f in /etc/profile.d/*.sh; do
+        [ -r "$f" ] && . "$f"
+    done
+    unset f
+fi
