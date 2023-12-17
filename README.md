@@ -11,6 +11,7 @@ $ sudo -i || su
 # tree /opt/AltSys
 # exit
 ```
+[![asciicast](https://asciinema.org/a/627368.svg)](https://asciinema.org/a/627368)
 
 I initially also wanted to provide OpenPAM and slicer69's Doas port for Linux, but I figured that is out of the scope for this script(In the future, a package).
 
