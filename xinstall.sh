@@ -1,5 +1,49 @@
 #!/bin/sh
-echo "Install OKSH in your system INMEDIATELY after this script runs. If you want to use misc/TTTS(TTS engine that uses a public API) you WILL need curl, if you want to use misc/ccat(Cat but with syntax highlighting) you WILL need source-highlight"
+check_pkg() {
+    MISSING_OBLIGATORY=""
+    MISSING_OPTIONAL=""
+    ALTERNATIVE_OPTIONAL=""
+
+    for pkg in "$@"; do
+        if ! command -v "$pkg" >/dev/null 2>&1; then
+            case $pkg in
+                chroot-git | git )
+                    MISSING_OBLIGATORY="$MISSING_OBLIGATORY $pkg"
+                    ;;
+                source-highlight )
+                    MISSING_OPTIONAL="$MISSING_OPTIONAL $pkg"
+                    ;;
+                curl | sox | mpg123 )
+                    if ! command -v curl >/dev/null 2>&1 && ! command -v sox >/dev/null 2>&1 && ! command -v mpg123 >/dev/null 2>&1; then
+                        MISSING_OPTIONAL="$MISSING_OPTIONAL $pkg"
+                    else
+                        ALTERNATIVE_OPTIONAL="$ALTERNATIVE_OPTIONAL $pkg"
+                    fi
+                    ;;
+            esac
+        fi
+    done
+
+    if [ -n "$MISSING_OBLIGATORY" ]; then
+        printf "Missing obligatory dependencies:%s\n" "$MISSING_OBLIGATORY"
+    fi
+
+    if [ -n "$MISSING_OPTIONAL" ]; then
+        if [ -n "$ALTERNATIVE_OPTIONAL" ]; then
+            printf "Missing either %s or %s\n" "$ALTERNATIVE_OPTIONAL"
+        else
+            printf "Missing optional dependencies:%s\n" "$MISSING_OPTIONAL"
+        fi
+    fi
+
+    if ! command -v ksh >/dev/null 2>&1; then
+        printf "Install a o(KSH) compatible shell. Use OKSH if possible.\n"
+    fi
+}
+
+# Call the function with both obligatory and optional dependencies
+check_pkg chroot-git git source-highlight curl sox mpg123
+
 FILESDIR=$PWD
 AR="zig ar"
 chroot-git clone https://git.suckless.org/sbase/ &&
