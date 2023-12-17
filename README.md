@@ -12,4 +12,6 @@ $ sudo -i || su
 # exit
 ```
 
+I initially also wanted to provide OpenPAM and slicer69's Doas port for Linux, but I figured that is out of the scope for this script(In the future, a package).
+
 ###### V0.0.1-2023-12-17_07:50AM GTM-03
