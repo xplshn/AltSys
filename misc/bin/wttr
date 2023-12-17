@@ -1,0 +1,13 @@
+#!/bin/ksh
+
+if [ -n "$1" ]; then
+    location="$1"
+     if [ -n "$2" ]; then
+        params="$2"
+    else
+        params="0Qn"
+    fi
+    curl "wttr.in/$location?$params"
+else
+    echo "No location provided. Usage: wttr <location> <params[see curl wttr.in/:help]>"
+fi

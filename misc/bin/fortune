@@ -1,0 +1,11 @@
+#!/bin/ksh
+
+# Wrapper script to execute .fortune-kind and handle its issue
+output=$(/bin/dash -c 'export FORTUNE_DIR="/opt/AltSys/misc/share/fortunes/"; .fortune-kind 2>/dev/null')
+
+# Check if the output is not empty and display it
+if [ -n "$output" ]; then
+    echo "$output"
+else
+    echo "Failed to retrieve fortune or encountered an error."
+fi
