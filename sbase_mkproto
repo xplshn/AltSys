@@ -1,0 +1,20 @@
+#!/bin/sh
+
+usage() {
+    echo "mkproto: prefix manprefix proto" >&2
+    exit 1
+}
+
+prefix="${1?$(usage)}"
+manprefix="${2?$(usage)}"
+proto="${3?$(usage)}"
+
+echo "Creating directories if they don't exist..."
+mkdir -p "$prefix/bin"
+mkdir -p "$manprefix/man/man1"
+
+echo "Copying executables to $prefix/bin"
+find . ! -name 'Makefile*' -type f \( -perm -u+x -o -perm -g+x -o -perm o+x \) -exec cp -n -t "$prefix/bin" {} +
+
+echo "Copying man pages to $manprefix/man/man1"
+find . ! -name 'Makefile*' -name '*.1' -exec cp -n -t "$manprefix/man/man1" {} +
