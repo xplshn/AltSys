@@ -11,15 +11,15 @@ check_pkg() {
                     if [ -z "$ALTERNATIVE_OBLIGATORY" ]; then
                         ALTERNATIVE_OBLIGATORY="$pkg"
                     else
-                        MISSING_OBLIGATORY="$pkg"
+                        MISSING_OBLIGATORY="$MISSING_OBLIGATORY $pkg"
                     fi
                     ;;
                 source-highlight )
-                    MISSING_OPTIONAL="$pkg"
+                    MISSING_OPTIONAL="$MISSING_OPTIONAL $pkg"
                     ;;
                 curl | sox | mpg123 )
                     if ! command -v curl >/dev/null 2>&1 && ! command -v sox >/dev/null 2>&1 && ! command -v mpg123 >/dev/null 2>&1; then
-                        MISSING_OPTIONAL="$pkg"
+                        MISSING_OPTIONAL="$MISSING_OPTIONAL $pkg"
                     fi
                     ;;
             esac
@@ -31,7 +31,7 @@ check_pkg() {
     fi
 
     if [ -n "$MISSING_OPTIONAL" ]; then
-        printf "Missing optional dependencies:%s\n" "$MISSING_OPTIONAL"
+        printf "Missing optional dependencies: %s\n" "$MISSING_OPTIONAL"
     fi
 
     if [ -n "$ALTERNATIVE_OBLIGATORY" ]; then
@@ -43,6 +43,7 @@ check_pkg() {
     fi
 }
 
+# Call the function with both obligatory and optional dependencies
 check_pkg chroot-git git source-highlight curl sox mpg123
 
 FILESDIR=$PWD
