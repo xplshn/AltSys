@@ -3,4 +3,13 @@
 ##### I DO NOT TAKE ANY RESPONSABILITY FOR BREAKAGES, LOST OF FILES, ETC.
 ###### Do not mind the janky scripts I made to get sbase to work. (make install on sbase is done by a stupid, undocumented little piece of (POSIX)s**ll code)
 
+```install guide
+$ sudo -i || su
+# xbps-install -yu make zig libutf8proc-devel binutils clang zlib-devel libtls-devel mold binutils libutf8proc-devel coreutils sed tree
+# git clone https://github.com/xplshn/AltSys/ || chroot-git clone https://github.com/xplshn/AltSys/
+# cd AltSys && sh ./xinstall.sh && xbps-remove -ORo make zig libutf8proc-devel binutils clang zlib-devel libtls-devel mold binutils libutf8proc-devel coreutils
+# tree /opt/AltSys
+# exit
+```
+
 ###### V0.0.1-2023-12-17_07:50AM GTM-03
