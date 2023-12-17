@@ -1,0 +1,37 @@
+#!/bin/sh
+# modules-load [-n] [-v] - modules-load.d(5) compatible kernel module loader
+
+# Set path if necessary
+# export PATH=/opt/AltSys/toybox/bin:/opt/AltSys/toybox/sbin:/opt/AltSys/obase/ubase:/opt/AltSys/sbase:/bin:/sbin
+
+# Source profile
+. /etc/profile
+
+# Function to load modules from a given file
+load_modules() {
+    while IFS= read -r line; do
+        # Skip empty lines and comments
+        case $line in
+            ''|\#*) continue ;;
+        esac
+
+        # Load the module
+        /sbin/modprobe -ab "$line"
+    done < "$1"
+}
+
+# Extract module names from kernel command line
+modules_cmdline=$(sed -n 's/,/\n/g;s/\(.* \|^\)\(rd\.\)\?modules-load=\([^ ]*\).*/\3/p' /proc/cmdline)
+
+# Load modules from command line
+if [ -n "$modules_cmdline" ]; then
+    printf "%s\n" "$modules_cmdline" | while IFS= read -r module; do
+        /sbin/modprobe -ab "$module"
+    done
+fi
+
+# Load modules from configuration files
+for file in /etc/modules-load.d/*.conf /run/modules-load.d/*.conf /usr/lib/modules-load.d/*.conf; do
+    [ -e "$file" ] || continue
+    load_modules "$file"
+done
