@@ -1,48 +1,36 @@
 #!/bin/sh
-check_pkg() {
-    MISSING_OBLIGATORY=""
-    ALTERNATIVE_OBLIGATORY=""
-    MISSING_OPTIONAL=""
-
+pkg_needed() {
+    MISSING=""
     for pkg in "$@"; do
         if ! command -v "$pkg" >/dev/null 2>&1; then
-            case $pkg in
-                chroot-git | git )
-                    if [ -z "$ALTERNATIVE_OBLIGATORY" ]; then
-                        ALTERNATIVE_OBLIGATORY="$pkg"
-                    else
-                        MISSING_OBLIGATORY="$pkg"
-                    fi
-                    ;;
-                source-highlight )
-                    MISSING_OPTIONAL="$pkg"
-                    ;;
-                curl | sox | mpg123 )
-                    if ! command -v curl >/dev/null 2>&1 && ! command -v sox >/dev/null 2>&1 && ! command -v mpg123 >/dev/null 2>&1; then
-                        MISSING_OPTIONAL="$pkg"
-                    fi
-                    ;;
-            esac
+            MISSING="$pkg $MISSING"
         fi
     done
 
-    if [ -n "$MISSING_OBLIGATORY" ]; then
-        printf "Missing both chroot-git and git\n"
-    elif [ -n "$ALTERNATIVE_OBLIGATORY" ]; then
-        GIT_CMD="$ALTERNATIVE_OBLIGATORY"
-    fi
-
-    if [ -n "$MISSING_OPTIONAL" ]; then
-        printf "Missing optional dependency: %s\n" "$MISSING_OPTIONAL"
-    fi
-
-    if ! command -v ksh >/dev/null 2>&1; then
-        printf "Install a o(KSH) compatible shell. Use OKSH if possible.\n"
+    if [ -n "$MISSING" ]; then
+        printf "Please install the following missing packages: %s\n" "$MISSING"
     fi
 }
 
-# Call the function with both obligatory and optional dependencies
-check_pkg chroot-git git source-highlight curl sox mpg123
+pkg_wanted() {
+    AVAILABLE=""
+    for pkg in "$@"; do
+        if command -v "$pkg" >/dev/null 2>&1; then
+            AVAILABLE="$pkg"
+            break
+        fi
+    done
+
+    if [ -n "$AVAILABLE" ]; then
+        printf "You can use: %s\n" "$AVAILABLE"
+    else
+        printf "Optional packages available: %s or %s\n" "$1" "$2"
+    fi
+}
+
+# Usage of pkg_needed and pkg_wanted functions
+pkg_needed chroot-git git
+pkg_wanted sox mpg123
 
 if [ -z "$GIT_CMD" ]; then
     echo "Missing either chroot-git or git to clone repositories."
