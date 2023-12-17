@@ -30,8 +30,8 @@ if [ -x /usr/bin/ls ]; then
 	appendpath '/opt/AltSys/toybox/usr/bin'
 	appendpath '/opt/AltSys/toybox/usr/sbin'
 	appendpath '/opt/AltSys/misc/bin'
-	appendpath '/opt/AltSys/obase/sbase'
-	appendpath '/opt/AltSys/obase/ubase'
+	appendpath '/opt/AltSys/obase/sbase/bin'
+	appendpath '/opt/AltSys/obase/ubase/bin'
 	# The commands from /opt/AltSys take presence.#
 	# NOTE: For a more Posixy shell, move the sbase and ubase to the top.
 else
@@ -42,8 +42,8 @@ else
 	appendpath '/opt/AltSys/toybox/usr/bin'
 	appendpath '/opt/AltSys/toybox/usr/sbin'
 	appendpath '/opt/AltSys/misc/bin'
-	appendpath '/opt/AltSys/obase/sbase'
-	appendpath '/opt/AltSys/obase/ubase'
+	appendpath '/opt/AltSys/obase/sbase/bin'
+	appendpath '/opt/AltSys/obase/ubase/bin'
 	# The commands from /opt/AltSys take presence.#
 	# NOTE: For a more Posixy shell, move the sbase and ubase to the top.
 	appendpath '/usr/local/sbin'
