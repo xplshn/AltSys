@@ -1,0 +1,49 @@
+#!/bin/sh
+
+# Check if the counter file exists, if not, create it and initialize the count to 0
+COUNTER_FILE="/opt/AltSys/misc/bin/.novel.tmp"
+
+if [ ! -f "$COUNTER_FILE" ]; then
+    echo "0" > "$COUNTER_FILE"
+fi
+
+# Read the current count from the counter file
+COUNT=$(cat "$COUNTER_FILE")
+
+# If the count is less than 5, execute the script and increment the count
+if [ "$COUNT" -lt 5 ]; then
+    # Function to clear the screen
+    clear_screen() {
+        printf "\033[2J\033[H"
+    }
+
+    # Function to show a message and wait for a specified duration
+    show_message() {
+        printf "%s\n" "$1"
+        sleep "$2"
+        clear_screen
+    }
+
+    clear_screen
+
+    # Display the first message and transition
+    show_message "$(cowsay -f daemon "Well well well... If isn't this kFreeBSD? Ha, ha, ha..! *Cynical laughter*")" 2
+
+    # Display the second message
+    show_message "$(cowsay -f moose "So, are you happy now? You might have broken your system in an irreversible manner... just kidding, hehe.")" 2
+
+    # Display the third message
+    show_message "$(cowsay -f moose "Anyways, why don't you go ahead and replace most applications by their Flatpak counterparts? Just saying, who knows what might happen when PID #1's config, sed, awk, and most of your /usr/bin dir gets replaced...")" 5
+
+    # Display the final message
+    show_message "$(cowsay -f tux "Hi! Anything happen while I was gone?")" 0
+
+    # Increment the count and write it back to the counter file
+    COUNT=$((COUNT + 1))
+    echo "$COUNT" > "$COUNTER_FILE"
+
+# If the count reaches 5, remove the script itself
+elif [ "$COUNT" -eq 5 ]; then
+    rm $COUNTER_FILE
+    rm "$(which .novel)"
+fi
