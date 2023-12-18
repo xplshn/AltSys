@@ -15,4 +15,6 @@ $ sudo -i || su
 
 I initially also wanted to provide OpenPAM and slicer69's Doas port for Linux, but I figured that is out of the scope for this script(In the future, a package).
 
+### Please check every script at /etc/runit/ if you actually want to replace your coreutils. Runit relies on lots of scripts, which contain bashisms, GNUisms, and aren't really as POSIX as they might seem at first, a good way to test if a script is realiable is to use mKSH or oKSH(Isn't as POSIX as it should be, but is easier to use than mKSH for newbies and to port scripts from sh and bash).
+
 ###### V0.0.1-2023-12-17_07:50AM GTM-03
