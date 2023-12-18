@@ -8,5 +8,7 @@ coreutils: Toybox : https://github.com/landley/toybox                           
 coreutils: Ubase  : https://git.suckless.org/ubase/                       |commit-date: 2023-09-22 08:06
 coreutils: Sbase  : https://git.suckless.org/sbase/                       |commit-date: 2023-12-01 12:33
 
-______________________________________2023-12-15
+_________________________________________2023-12-18
 NOTE: Use whoch to see the order of execution of a command if it provided by more than one directory in your PATH.
+NOTE: Commits might be outdated. This SOURCES file is also used for binary releases - I will make them public some time later this year.
+---------------------------------------------------
