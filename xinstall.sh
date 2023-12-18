@@ -52,6 +52,7 @@ mkdir -p /opt/AltSys/misc/ &&
 cp -ru misc/* /opt/AltSys/misc/ &&
 cp -r etc/* /etc/ &&
 cp -r bin/* /bin/ &&
+cp ./SOURCES* /opt/AltSys/
 ksh ./SOURCES.sh 2>/dev/null || sh ./SOURCES.sh 2>/dev/null || cat SOURCES &&
 cd .. &&
 echo "You are now running an Alt(tered)Sys. Files at /opt/AltSys. Some files at /etc and /bin have been modified."
