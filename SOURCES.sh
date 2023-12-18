@@ -16,9 +16,11 @@ printf '%b' "${YELLOW}misc:${NC} fortune                         : ${CYAN}https:
 printf '%b' "${YELLOW}misc:${NC} pfetch                          : ${CYAN}https://github.com/OldWorldOrdr/pfetch${NC}  - MODIFIED artwork from this PR: ${CYAN}https://github.com/OldWorldOrdr/pfetch/pull/7${NC}\n"
 printf '%b' "${YELLOW}misc:${NC} awk                             : ${CYAN}https://github.com/onetrueawk/awk${NC}       |${BLUE}commit: 8424e93ad3e63cdfda1ae34e984691c3fe879175${NC}\n"
 printf '%b' "${YELLOW}misc:${NC} cowsay & cowthink implementation: ${CYAN}https://gitlab.com/nmyk/cowsay${NC}          |${BLUE}commit: cca7d2f52ae34625d6230cfd537ff5d5cba0a57d${NC}\n"
-printf '%b' "${YELLOW}misc:${NC} ccat, ttts                      : ${CYAN}https://github.com/xplshn/Handyscripts${NC}  |${BLUE}commit: 11a19060c009bb82170bdc8edf9e4c4b5c780be8${NC}\n"
+printf '%b' "${YELLOW}misc:${NC} ccat, ttts, baker, whoch        : ${CYAN}https://github.com/xplshn/Handyscripts${NC}  |${BLUE}commit: 11a19060c009bb82170bdc8edf9e4c4b5c780be8${NC}\n"
 printf '%b' "${GREEN}coreutils:${NC} Toybox: ${CYAN}https://github.com/landley/toybox${NC}                            |${BLUE}commit: ab046139f9d83136ff1cb143ee5923b3ee22a972${NC}\n"
 printf '%b' "${GREEN}coreutils:${NC} Ubase : ${CYAN}https://git.suckless.org/ubase/${NC}                       |${MAGENTA}commit-date: 2023-09-22 08:06${NC}\n"
 printf '%b' "${GREEN}coreutils:${NC} Sbase : ${CYAN}https://git.suckless.org/sbase/${NC}                       |${MAGENTA}commit-date: 2023-12-01 12:33${NC}\n"
 printf '%b' "${RED}________________________________________2023-12-15${NC}\n"
-printf '%b' "${YELLOW}Info:${NC} The coreutils are used in this order: if \$COMMAND is provided by ubase, but also by sbase, and also by toybox, the system will use Toybox's, if the command is provided only by sbase, or ubase, the system will use that, same goes for toybox, if the command is not found on /opt/AltSys/*/*, the system will fallback to the commands on /bin, /usr/bin, etc. See /etc/profile\n"
+printf '%b' "${YELLOW}NOTE:${NC} Use whoch to see the order of execution of a command if it is provided by more than one directory in your PATH.\n"
+printf '%b' "${YELLOW}NOTE:${NC} Commits might be outdated. This SOURCES file is also used for binary releases - I will make them public some time later this year.
+printf '%b' "${RED}⎻⎻⎻⎻⎻⎻⎻⎻⎻⎻⎻⎻⎻⎻⎻⎻⎻⎻⎻⎻⎻⎻⎻⎻⎻⎻⎻⎻⎻⎻⎻⎻⎻⎻⎻⎻⎻⎻⎻⎻⎻⎻⎻⎻⎻⎻⎻⎻⎻⎻${NC}\n"
