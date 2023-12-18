@@ -1,12 +1,12 @@
-core: doas                            : https://github.com/slicer69/doas        |commit: e9bee5f17210a97a40c6cdc130740fa2d70f9b0e
-misc: fortune                         : https://github.com/cafkafk/fortune-kind |commit: 120798bf41c5b0b28fdd9025bf8b1ebe2d2193c7
-misc: pfetch                          : https://github.com/OldWorldOrdr/pfetch  - MODIFIED artwork from this PR: https://github.com/OldWorldOrdr/pfetch/pull/7
-misc: awk                             : https://github.com/onetrueawk/awk       |commit: 8424e93ad3e63cdfda1ae34e984691c3fe879175
-misc: cowsay & cowthink implementation: https://gitlab.com/nmyk/cowsay          |commit: cca7d2f52ae34625d6230cfd537ff5d5cba0a57d
-misc: ccat, ttts                      : https://github.com/xplshn/Handyscripts  |commit: 11a19060c009bb82170bdc8edf9e4c4b5c780be8
-coreutils: Toybox: https://github.com/landley/toybox                            |commit: ab046139f9d83136ff1cb143ee5923b3ee22a972
-coreutils: Ubase : https://git.suckless.org/ubase/                       |commit-date: 2023-09-22 08:06
-coreutils: Sbase : https://git.suckless.org/sbase/                       |commit-date: 2023-12-01 12:33
+core: doas                             : https://github.com/slicer69/doas        |commit: e9bee5f17210a97a40c6cdc130740fa2d70f9b0e
+misc: fortune                          : https://github.com/cafkafk/fortune-kind |commit: 120798bf41c5b0b28fdd9025bf8b1ebe2d2193c7
+misc: pfetch                           : https://github.com/OldWorldOrdr/pfetch  - MODIFIED artwork from this PR: https://github.com/OldWorldOrdr/pfetch/pull/7
+misc: awk                              : https://github.com/onetrueawk/awk       |commit: 8424e93ad3e63cdfda1ae34e984691c3fe879175
+misc: cowsay & cowthink implementation : https://gitlab.com/nmyk/cowsay          |commit: cca7d2f52ae34625d6230cfd537ff5d5cba0a57d
+misc: ccat, ttts, baker, whoch         : https://github.com/xplshn/Handyscripts  |commit: 11a19060c009bb82170bdc8edf9e4c4b5c780be8
+coreutils: Toybox : https://github.com/landley/toybox                            |commit: ab046139f9d83136ff1cb143ee5923b3ee22a972
+coreutils: Ubase  : https://git.suckless.org/ubase/                       |commit-date: 2023-09-22 08:06
+coreutils: Sbase  : https://git.suckless.org/sbase/                       |commit-date: 2023-12-01 12:33
 
 ______________________________________2023-12-15
-Info: The coreutils are used in this order: if $COMMAND is provided by ubase, but also by sbase, and also by toybox, the system will use Toybox's, if the command is provided only by sbase, or ubase, the system will use that, same goes for toybox, if the command is not found on /opt/AltSys/*/*, the system will fallback to the commands on /bin, /usr/bin, etc. See /etc/profile
+NOTE: Use whoch to see the order of execution of a command if it provided by more than one directory in your PATH.
