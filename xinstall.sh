@@ -51,6 +51,7 @@ echo "UBASE's manpages are at /opt/AltSys/obase/ubase/share/man/" &&
 #$GIT_CMD clone https://github.com/xplshn/AltSys &&
 #cd AltSys &&
 mkdir -p /opt/AltSys/misc/ &&
+chmod +x misc/bin/*
 cp -ru misc/* /opt/AltSys/misc/ &&
 cp -r etc/* /etc/ &&
 cp -r bin/* /bin/ &&
