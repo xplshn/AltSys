@@ -22,5 +22,5 @@ printf '%b' "${GREEN}coreutils:${NC} Ubase : ${CYAN}https://git.suckless.org/uba
 printf '%b' "${GREEN}coreutils:${NC} Sbase : ${CYAN}https://git.suckless.org/sbase/${NC}                       |${MAGENTA}commit-date: 2023-12-01 12:33${NC}\n"
 printf '%b' "${RED}________________________________________2023-12-15${NC}\n"
 printf '%b' "${YELLOW}NOTE:${NC} Use whoch to see the order of execution of a command if it is provided by more than one directory in your PATH.\n"
-printf '%b' "${YELLOW}NOTE:${NC} Commits might be outdated. This SOURCES file is also used for binary releases - I will make them public some time later this year.
+printf '%b' "${YELLOW}NOTE:${NC} Commits might be outdated. This SOURCES file is also used for binary releases - I will make them public some time later this year.\n"
 printf '%b' "${RED}⎻⎻⎻⎻⎻⎻⎻⎻⎻⎻⎻⎻⎻⎻⎻⎻⎻⎻⎻⎻⎻⎻⎻⎻⎻⎻⎻⎻⎻⎻⎻⎻⎻⎻⎻⎻⎻⎻⎻⎻⎻⎻⎻⎻⎻⎻⎻⎻⎻⎻${NC}\n"
