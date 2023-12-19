@@ -48,7 +48,7 @@ if ! check_command "$GIT_CMD"; then
 fi
 
 if ! "$GIT_CMD" clone https://git.suckless.org/sbase/; then
-    printf "Cloning sbase failed.\n"
+    printf "Cloning sbase failed. Remember to delete ./sbase ./ubase ./toybox /opt/AltSys before re-building\n"
     exit 1
 fi
 
@@ -56,8 +56,9 @@ fi
 cd sbase || exit 1
 cp "${FILESDIR}/sbase_mkproto" ./scripts/mkproto
 
-if ! CC="$SBASE_CC" CFLAGS="$SBASE_CFLAGS" LD="$SBASE_LD" make -j"$THREADS" sbase-box; then
+if ! CC="$SBASE_CC" CFLAGS="$SBASE_CFLAGS" LD="$SBASE_LD" make -j"$THREADS" sbase-box > sbase_build.log; then
     printf "Building sbase failed.\n"
+    cat sbase_build.log
     exit 1
 fi
 
@@ -79,8 +80,9 @@ fi
 cd toybox || exit 1
 cp -u "${FILESDIR}/toybox_config" .config
 
-if ! CC="$TOYBOX_CC" CXX="$TOYBOX_CXX" CFLAGS="$TOYBOX_CFLAGS" PREFIX="$TOYBOX_PREFIX" LD="$TOYBOX_LD" make -j"$THREADS" install; then
+if ! CC="$TOYBOX_CC" CXX="$TOYBOX_CXX" CFLAGS="$TOYBOX_CFLAGS" PREFIX="$TOYBOX_PREFIX" LD="$TOYBOX_LD" make -j"$THREADS" install > toybox_build.log; then
     printf "Building toybox failed.\n"
+    cat toybox_build.log
     exit 1
 fi
 
@@ -97,8 +99,9 @@ fi
 cd ubase || exit 1
 cp "${FILESDIR}/ubase_makefile" ./Makefile
 
-if ! CC="$UBASE_CC" CFLAGS="$UBASE_CFLAGS" LD="$UBASE_LD" PREFIX="$UBASE_PREFIX" MANPREFIX="$UBASE_MANPREFIX" make -j"$THREADS" install; then
+if ! CC="$UBASE_CC" CFLAGS="$UBASE_CFLAGS" LD="$UBASE_LD" PREFIX="$UBASE_PREFIX" MANPREFIX="$UBASE_MANPREFIX" make -j"$THREADS" install > ubase_build.log; then
     printf "Building ubase failed.\n"
+    cat ubase_build.log
     exit 1
 fi
 
