@@ -1,0 +1,16 @@
+#!/bin/sh
+
+# Define the commands provided by toybox
+commands=$(/opt/AltSys/toybox/bin/toybox | grep -v '^\[')
+
+# Loop through each command
+for cmd in $commands; do
+    # Check if an equivalent exists in /usr/bin or /usr/sbin
+    if [ -x "/usr/bin/$cmd" ]; then
+        # Execute "baker" on the command
+        /opt/AltSys/misc/bin/baker "/usr/bin/$cmd" && ln -sf "$(command -v toybox)" "/usr/bin/$cmd"
+    elif [ -x "/usr/sbin/$cmd" ]; then
+        # Execute "baker" on the command
+        /opt/AltSys/misc/bin/baker "/usr/sbin/$cmd" && ln -sf "$(command -v toybox)" "/usr/sbin/$cmd"
+    fi
+done
