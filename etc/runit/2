@@ -2,7 +2,9 @@
 # vim: set ts=4 sw=4 et:
 
 #PATH=/usr/bin:/usr/sbin
-PATH=/opt/AltSys/core/usr/bin:/opt/AltSys/toybox/bin:/opt/AltSys/toybox/sbin:/opt/AltSys/toybox/usr/bin:/opt/AltSys/toybox/usr/sbin:/opt/AltSys/misc/bin:/opt/AltSys/obase/sbase:/opt/AltSys/obase/ubase:/usr/bin:/usr/sbin
+#PATH=/opt/altsys/bin:/opt/altsys/usr/bin:/opt/altsys/usr/sbin:/opt/altsys/sbin:/opt/AltSys/core/usr/bin:/opt/AltSys/toybox/bin:/opt/AltSys/toybox/sbin:/opt/AltSys/toybox/usr/bin:/opt/AltSys/toybox/usr/sbin:/opt/AltSys/misc/bin:/opt/AltSys/obase/ubase/bin:/opt/AltSys/obase/sbase/bin:/usr/bin:/usr/sbin
+RECUR_TO_UUTILS=1 . /etc/profile
+export PATH
 
 runlevel=default
 for arg in $(cat /proc/cmdline); do

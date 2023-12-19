@@ -46,14 +46,15 @@ CC="zig cc" CFLAGS="-static" LD="mold" PREFIX="/opt/AltSys/obase/ubase" MANPREFI
 cd .. &&
 echo "UBASE NOW AVAILABLE AT /opt/AltSys/obase/ubase/" &&
 echo "UBASE's manpages are at /opt/AltSys/obase/ubase/share/man/" &&
-$GIT_CMD clone https://github.com/xplshn/AltSys &&
-cd AltSys &&
+cargo install --root /opt/AltSys/core/gutils coreutils --features unix &&
+#$GIT_CMD clone https://github.com/xplshn/AltSys &&
+#cd AltSys &&
 mkdir -p /opt/AltSys/misc/ &&
 cp -ru misc/* /opt/AltSys/misc/ &&
 cp -r etc/* /etc/ &&
 cp -r bin/* /bin/ &&
-cp ./SOURCES* /opt/AltSys/
+cp ./SOURCES* /opt/AltSys/ &&
 ksh ./SOURCES.sh 2>/dev/null || sh ./SOURCES.sh 2>/dev/null || cat SOURCES &&
-cd .. &&
+#cd .. &&
 echo "You are now running an Alt(tered)Sys. Files are at /opt/AltSys. Some files at /etc and /bin have been modified in order to get Runit to behave kindly with POSIX."
 /opt/AltSys/misc/bin/cowsay "You've done it, Ronny boy! You have liberated yourself from GPL3 (at least on your coreutils)! Now the interesting question is... Now... What do we do with all this space available? I mean, yes, we finally have a UNIX environment(Change the order of PATH, to UBASE>SBASE>TOYBOX for a more UNIXY and 'HARDCORE' experience) in a Linux distro, isn't this 'the dream'?"

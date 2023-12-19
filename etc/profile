@@ -54,6 +54,10 @@ else
 	# NOTE: For a more Posixy shell, move the sbase and ubase to the top.
 fi
 
+if [ "$RECUR_TO_UUTILS" = "1" ] && [ -d "/opt/AltSys/core/uutils/bin" ]; then
+    PATH="/opt/AltSys/core/uutils/bin:$PATH"
+fi
+
 unset appendpath
 
 export PATH
