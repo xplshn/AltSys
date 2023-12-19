@@ -33,6 +33,7 @@ echo "SBASE NOW AVAILABLE AT /opt/AltSys/obase/sbase/" &&
 mkdir -p /opt/AltSys/obase/sbase/share/man/ &&
 mv /opt/AltSys/obase/sbase/man /opt/AltSys/obase/sbase/share/man &&
 echo "SBASE's manpages are at /opt/AltSys/obase/sbase/share/man/" &&
+rm -rf ./sbase/ &&
 $GIT_CMD clone https://github.com/landley/toybox &&
 cd toybox &&
 cp -u ${FILESDIR}/toybox_config .config &&
@@ -46,7 +47,7 @@ CC="zig cc" CFLAGS="-static" LD="mold" PREFIX="/opt/AltSys/obase/ubase" MANPREFI
 cd .. &&
 echo "UBASE NOW AVAILABLE AT /opt/AltSys/obase/ubase/" &&
 echo "UBASE's manpages are at /opt/AltSys/obase/ubase/share/man/" &&
-cargo install --root /opt/AltSys/core/gutils coreutils --features unix &&
+#cargo install --root /opt/AltSys/core/gutils coreutils --features unix &&
 #$GIT_CMD clone https://github.com/xplshn/AltSys &&
 #cd AltSys &&
 mkdir -p /opt/AltSys/misc/ &&
