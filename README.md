@@ -15,6 +15,6 @@ $ sudo -i || su
 
 I initially also wanted to provide OpenPAM and slicer69's Doas port for Linux, but I figured that is out of the scope for this script(In the future, a package).
 
-### Please check every script at /etc/runit/ if you actually want to replace your coreutils. IT WILL NOT WORK BY DEFAULT.
+### Please check every script at /etc/runit/ if you actually want to replace your coreutils. RUNIT WILL NOT WORK UNLESS YOU MANUALLY FIX IT AFTER UNINSTALLING THE COREUTILS, YOU CAN USE THIS SCRIPT WITHOUT ACTUALLY UNINSTALLING THEM(RECOMMENDED NOT TO UNINSTALL THEM)
 
 ###### V0.0.1-2023-12-17_07:50AM GTM-03
