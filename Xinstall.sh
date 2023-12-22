@@ -8,20 +8,20 @@ NC='\033[0m' # No Color
 # Fixed variables
 THREADS="${THREADS:-1}"
 FILESDIR="$PWD"
-AR="zig ar"
-SBASE_CC="zig cc"
-SBASE_CFLAGS="-static"
-SBASE_LD="mold"
+AR="ar"
+SBASE_CC="clang"
+SBASE_CFLAGS="-g -static -O2 -pipe -fPIE"
+SBASE_LD="ld"
 
 TOYBOX_CC="clang"
 TOYBOX_CXX="clang++"
-TOYBOX_CFLAGS="-static -O2 -pipe"
+TOYBOX_CFLAGS="-g -static -O2 -pipe -fPIE"
 TOYBOX_PREFIX="/opt/AltSys/toybox/"
-TOYBOX_LD="mold"
+TOYBOX_LD="ld"
 
-UBASE_CC="zig cc"
-UBASE_CFLAGS="-static"
-UBASE_LD="mold"
+UBASE_CC="clang"
+UBASE_CFLAGS="-g -static -O2 -pipe -fPIE"
+UBASE_LD="ld"
 UBASE_PREFIX="/opt/AltSys/obase/ubase"
 UBASE_MANPREFIX="/opt/AltSys/obase/ubase/share/man"
 
@@ -36,50 +36,59 @@ display_missing_commands() {
     exit 1
 }
 
-# Clone Sbase repository
+# Decide which GIT to use
 if ! command -v chroot-git >/dev/null 2>&1; then
     GIT_CMD="git"
 else
     GIT_CMD="chroot-git"
 fi
 
+clone_or_update_repo() {
+    local repo_name="$1"
+    local repo_url="$2"
+
+    if [ -d "$repo_name/.git" ]; then
+        # Repository exists, update it
+        printf "Updating %s repository...\n" "$repo_name"
+        if ! (cd "$repo_name" && "$GIT_CMD" pull); then
+            printf "Updating %s repository failed.\n" "$repo_name"
+            exit 1
+        fi
+    else
+        # Repository does not exist, clone it
+        printf "Cloning %s repository...\n" "$repo_name"
+        if ! "$GIT_CMD" clone "$repo_url"; then
+            printf "Cloning %s repository failed.\n" "$repo_name"
+            exit 1
+        fi
+    fi
+}
+
 if ! check_command "$GIT_CMD"; then
     display_missing_commands "$GIT_CMD"
 fi
 
-if ! "$GIT_CMD" clone https://git.suckless.org/sbase/; then
-    printf "Cloning sbase failed. Remember to delete ./sbase ./ubase ./toybox /opt/AltSys before re-building\n"
-    exit 1
-fi
-
+clone_or_update_repo "sbase" "https://git.suckless.org/sbase/" &&
 # Build and install Sbase
 cd sbase || exit 1
 cp "${FILESDIR}/sbase_mkproto" ./scripts/mkproto
-
 if ! CC="$SBASE_CC" CFLAGS="$SBASE_CFLAGS" LD="$SBASE_LD" make -j"$THREADS" sbase-box > sbase_build.log; then
     printf "Building sbase failed.\n"
     cat sbase_build.log
     exit 1
 fi
-
 if ! ./scripts/mkproto /opt/AltSys/obase/sbase /opt/AltSys/obase/sbase proto; then
     printf "Creating sbase directories failed.\n"
     exit 1
 fi
-
 cd .. || exit 1
 printf "${GREEN}OK:${NC} Installed ${GREEN}sbase${NC} at ${MAGENTA}/opt/AltSys/obase/sbase/${NC}\n"
 
 # Clone Toybox repository
-if ! git clone https://github.com/landley/toybox; then
-    printf "Cloning toybox failed.\n"
-    exit 1
-fi
-
+clone_or_update_repo "toybox" "https://github.com/landley/toybox"
 # Build and install Toybox
 cd toybox || exit 1
 cp -u "${FILESDIR}/toybox_config" .config
-
 if ! CC="$TOYBOX_CC" CXX="$TOYBOX_CXX" CFLAGS="$TOYBOX_CFLAGS" PREFIX="$TOYBOX_PREFIX" LD="$TOYBOX_LD" make -j"$THREADS" install > toybox_build.log; then
     printf "Building toybox failed.\n"
     cat toybox_build.log
@@ -90,21 +99,15 @@ cd .. || exit 1
 printf "${GREEN}OK:${NC} Installed ${GREEN}toybox${NC} at ${MAGENTA}/opt/AltSys/toybox/${NC}\n"
 
 # Clone Ubase repository
-if ! git clone https://git.suckless.org/ubase/; then
-    printf "Cloning ubase failed.\n"
-    exit 1
-fi
-
+clone_or_update_repo "ubase" "https://git.suckless.org/ubase/"
 # Build and install Ubase
 cd ubase || exit 1
 cp "${FILESDIR}/ubase_makefile" ./Makefile
-
 if ! CC="$UBASE_CC" CFLAGS="$UBASE_CFLAGS" LD="$UBASE_LD" PREFIX="$UBASE_PREFIX" MANPREFIX="$UBASE_MANPREFIX" make -j"$THREADS" install > ubase_build.log; then
     printf "Building ubase failed.\n"
     cat ubase_build.log
     exit 1
 fi
-
 cd .. || exit 1
 printf "${GREEN}OK:${NC} Installed ${GREEN}ubase${NC} at ${MAGENTA}/opt/AltSys/obase/ubase/${NC}\n"
 printf "${GREEN}OK:${NC} ${GREEN}ubase${NC}'s manpages are at ${MAGENTA}/opt/AltSys/obase/ubase/share/man/${NC}\n"
