@@ -8,20 +8,20 @@ NC='\033[0m' # No Color
 # Fixed variables
 THREADS="${THREADS:-1}"
 FILESDIR="$PWD"
-AR="zig ar"
-SBASE_CC="zig cc"
+AR="ar"
+SBASE_CC="clang"
 SBASE_CFLAGS="-g -static -O2 -pipe -fPIE"
-SBASE_LD="mold"
+SBASE_LD="ld"
 
 TOYBOX_CC="clang"
 TOYBOX_CXX="clang++"
 TOYBOX_CFLAGS="-g -static -O2 -pipe -fPIE"
 TOYBOX_PREFIX="/opt/AltSys/toybox/"
-TOYBOX_LD="mold"
+TOYBOX_LD="ld"
 
-UBASE_CC="zig cc"
+UBASE_CC="clang"
 UBASE_CFLAGS="-g -static -O2 -pipe -fPIE"
-UBASE_LD="mold"
+UBASE_LD="ld"
 UBASE_PREFIX="/opt/AltSys/obase/ubase"
 UBASE_MANPREFIX="/opt/AltSys/obase/ubase/share/man"
 
