@@ -1,74 +1,33 @@
-# /etc/profile
+PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/AltSys/toybox/usr/sbin:/opt/AltSys/misc/bin"
+PATH="/opt/AltSys/core/usr/bin:/opt/AltSys/toybox/bin:/opt/AltSys/toybox/sbin:/opt/AltSys/toybox/usr/bin:/opt/AltSys/toybox/usr/sbin/:/opt/AltSys/obase/ubase/bin:/opt/AltSys/obase/sbase/bin:$PATH"
+# NOTE. For a more POSIXy shell, make obase take presedence and run the cleanup.sh script(WARNING, will delete duplicates that obase provides from toybox.)
+# NOTE: Toybox codebase, while notably larger and cumbersome, is still more secure and the behaviour of the tools is much more predictable than the ones suckless.org provices.
 
-# System wide environment and startup programs.
+export PAGER=less
+umask 022
 
-#echo $PATH
-PATH=""
-
-appendpath () {
-    case ":$PATH:" in
-        *:"$1":*)
-            ;;
-        *)
-            PATH="${PATH:+$PATH:}$1"
-    esac
-}
-
-
-# Check if /usr/bin/ls(coreutils) exists
-if [ -x /usr/bin/ls ]; then
-        # Do not change these.#########################
-	appendpath '/opt/AltSys/core/usr/bin'
-	appendpath '/opt/AltSys/toybox/bin'
-	appendpath '/opt/AltSys/toybox/sbin'
-	appendpath '/opt/AltSys/toybox/usr/bin'
-	appendpath '/opt/AltSys/toybox/usr/sbin'
-	appendpath '/opt/AltSys/misc/bin'
-	appendpath '/opt/AltSys/obase/ubase/bin'
-	appendpath '/opt/AltSys/obase/sbase/bin'
-	# The commands from /opt/AltSys take presence.#
-	# NOTE: For a more Posixy shell, move the sbase and ubase to the top.
-	appendpath '/usr/local/sbin'
-	appendpath '/usr/local/bin'
-	appendpath '/usr/bin'
-	appendpath '/usr/sbin'
-	appendpath '/sbin'
-	appendpath '/bin'
+# use nicer PS1 for bash and busybox ash
+if [ -n "$BASH_VERSION" -o "$BB_ASH_VERSION" ]; then
+	PS1='\h:\w\$ '
+# use nicer PS1 for zsh
+elif [ -n "$ZSH_VERSION" ]; then
+	PS1='%m:%~%# '
+# set up fallback default PS1
 else
-	appendpath '/usr/local/sbin'
-	appendpath '/usr/local/bin'
-	appendpath '/usr/bin'
-	appendpath '/usr/sbin'
-	appendpath '/sbin'
-	appendpath '/bin'
-	# Do not change these.#########################
-	appendpath '/opt/AltSys/core/usr/bin'
-	appendpath '/opt/AltSys/toybox/bin'
-	appendpath '/opt/AltSys/toybox/sbin'
-	appendpath '/opt/AltSys/toybox/usr/bin'
-	appendpath '/opt/AltSys/toybox/usr/sbin'
-	appendpath '/opt/AltSys/misc/bin'
-	appendpath '/opt/AltSys/obase/ubase/bin'
-	appendpath '/opt/AltSys/obase/sbase/bin'
-	# The commands from /opt/AltSys take presence.#
-	# NOTE: For a more Posixy shell, move the sbase and ubase to the top.
+	: "${HOSTNAME:=$(hostname)}"
+	PS1='${HOSTNAME%%.*}:$(hpwd)'
+	[ "$(id -u)" -eq 0 ] && PS1="${PS1}λ " || PS1="${PS1}\@ "
 fi
 
 if [ "$RECUR_TO_UUTILS" = "1" ] && [ -d "/opt/AltSys/core/uutils/bin" ]; then
     PATH="/opt/AltSys/core/uutils/bin:$PATH"
 fi
 
-unset appendpath
-
 export PATH
 
-# Set default umask
-umask 022
-
-# Load profiles from /etc/profile.d
-if [ -d /etc/profile.d/ ]; then
-    for f in /etc/profile.d/*.sh; do
-        [ -r "$f" ] && . "$f"
-    done
-    unset f
-fi
+for script in /etc/profile.d/*.sh ; do
+	if [ -r "$script" ] ; then
+		. "$script"
+	fi
+done
+unset script
