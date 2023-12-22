@@ -71,7 +71,7 @@ cd .. || exit 1
 printf "${GREEN}OK:${NC} Installed ${GREEN}sbase${NC} at ${MAGENTA}/opt/AltSys/obase/sbase/${NC}\n"
 
 # Clone Toybox repository
-if ! git clone https://github.com/landley/toybox; then
+if ! "$GIT_CMD" clone https://github.com/landley/toybox; then
     printf "Cloning toybox failed.\n"
     exit 1
 fi
@@ -90,7 +90,7 @@ cd .. || exit 1
 printf "${GREEN}OK:${NC} Installed ${GREEN}toybox${NC} at ${MAGENTA}/opt/AltSys/toybox/${NC}\n"
 
 # Clone Ubase repository
-if ! git clone https://git.suckless.org/ubase/; then
+if ! "$GIT_CMD" clone https://git.suckless.org/ubase/; then
     printf "Cloning ubase failed.\n"
     exit 1
 fi
