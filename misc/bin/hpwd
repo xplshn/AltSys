@@ -1,0 +1,15 @@
+#!/bin/sh
+
+# Function to abbreviate directories under $HOME
+path() {
+    if [ "$PWD" = "$HOME" ]; then
+        printf "~"  # Display '~' if in home directory
+    elif [ "${PWD#$HOME/}" != "$PWD" ]; then
+        printf "~/${PWD#$HOME/} "  # Display '~/...' for directories inside home
+    else
+        printf "$PWD "  # Display the full path if outside home
+    fi
+}
+
+# Print the abbreviated directory path
+path

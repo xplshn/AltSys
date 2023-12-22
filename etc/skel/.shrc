@@ -1,0 +1,65 @@
+# .shrc #UNIVERSAL RC, ALMOST POSIX###############################
+s() {                                # Configure as you like.   ##
+    export "$1=$2"                   # Then do `ln -sfT .shrc`  ##
+}                                    # to other RC files like   ##
+###################################### .bashrc, this way you    ##
+  TMPF="$(date '+%s')"               # can have a universal RC. ##
+  HISTFILE="/tmp/tmp_e$TMPF"         # For most POSIX shells    ##
+s LOCATION "Berkeley"                #############################
+  MINPS1=1                                                      ##
+[ "$MINPS1" = "0" ] && HOSTNAME="@$(hostname) " || HOSTNAME=""  ##
+[ "$MINPS1" = "0" ] && PS1USER="$USER" || PS1USER=""            ##
+##################################################################
+
+set_prompt() {
+    PS1='$PS1USER$HOSTNAME$(hpwd)'
+    [ "$(id -u)" -eq 0 ] && PS1="${PS1}λ " || PS1="${PS1}@ "
+    export PS1
+}
+
+base16_loader() {
+	# Base16 Shell
+	BASE16_SHELL="$HOME/.config/base16-shell/"
+	[ -n "$PS1" ] &&
+		[ -f "$BASE16_SHELL/profile_helper.sh" ] &&
+		. "$BASE16_SHELL/profile_helper.sh"
+}
+
+alias_loader() {
+	alias ls='ls --color=auto'
+	alias c='clear'                                         # For more clearance
+	#alias myip='curl ipinfo.io/ip && printf "\n"'          # It displays your public IP
+	#alias glbl_status='curl https://status.plaintext.sh/t' # See the status of global CDNs and other servers.
+	#alias fortune-online='curl -SsL https://icanhazdadjoke.com | cowsay'
+	alias wttr='wttr $LOCATION'                             # Do not use during storms.
+	alias exit='cleanup ; exit'                             # Wraps up your session and sends it to .sh_history
+	alias '%'='/usr/bin/sudo'                               # Stupid, FEELS cool.
+	#alias sudo='echo "Use %. Be cool and showoff" #'       # Its stupid, looks cool.
+}
+
+load_profile() {
+if [ -r "$HOME/.profile" ]; then
+	. "$HOME/.profile"
+fi
+}
+
+show_weatherInfo() {
+    if [ -z "$WTTR_SHOWN" ]; then
+        if ping -q -c 1 -W 1 wttr.in >/dev/null; then
+            wttr "$LOCATION"
+            export WTTR_SHOWN=1
+        fi
+    fi
+}
+
+cleanup() {
+    echo "#@______ SESSION FROM ${0##*/} on $(date '+%A, %B %d, %Y at %T') ______@#" >> "$HISTFILE"
+    cat "$HISTFILE" >> "$HOME/.sh_history" 2>/dev/null
+    rm "$HISTFILE" 2>/dev/null
+}
+
+set_prompt
+alias_loader
+#base16_loader # Do not use as ROOT.
+load_profile
+#show_weatherInfo # Configure $LOCATION

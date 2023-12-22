@@ -27,7 +27,7 @@ if [ -x /usr/bin/ls ]; then
 	appendpath '/opt/AltSys/obase/ubase/bin'
 	appendpath '/opt/AltSys/obase/sbase/bin'
 	# The commands from /opt/AltSys take presence.#
-	# NOTE: For a more Posixy shell, move the sbase and ubase to the top.
+	# NOTE: For a more Posixy shell, move sbase and ubase to the top.
 	appendpath '/usr/local/sbin'
 	appendpath '/usr/local/bin'
 	appendpath '/usr/bin'
@@ -50,8 +50,7 @@ else
 	appendpath '/opt/AltSys/misc/bin'
 	appendpath '/opt/AltSys/obase/ubase/bin'
 	appendpath '/opt/AltSys/obase/sbase/bin'
-	# The commands from /opt/AltSys take presence.#
-	# NOTE: For a more Posixy shell, move the sbase and ubase to the top.
+	# NOTE: For a more Posixy shell, move sbase and ubase to the top.
 fi
 
 if [ "$RECUR_TO_UUTILS" = "1" ] && [ -d "/opt/AltSys/core/uutils/bin" ]; then

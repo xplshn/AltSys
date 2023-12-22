@@ -7,7 +7,7 @@ if [ -n "$1" ]; then
     else
         params="0Qn"
     fi
-    curl "wttr.in/$location?$params"
+    curl --silent "wttr.in/$location?$params"
 else
     echo "No location provided. Usage: wttr <location> <params[see curl wttr.in/:help]>"
 fi
