@@ -1,4 +1,4 @@
-#!/bin/ksh
+#!/bin/sh
 
 # Function to check and create cache file if it doesn't exist
 initialize_cache() {
