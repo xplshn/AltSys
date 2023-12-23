@@ -1,4 +1,4 @@
-#!/bin/ksh
+#!/bin/sh
 
 # Define directories
 toybox_dir="/opt/AltSys/toybox"
