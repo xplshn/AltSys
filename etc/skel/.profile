@@ -5,3 +5,5 @@ export PF_INFO="ascii title os host kernel uptime shell pkgs memory"
 export PF_COL1=4
 export PF_SEP="@→"
 export SHELL="$0"
+#export COOLSPINNER='|~/-\' # For a BSD styled spinner animation in most scripts at /opt/AltSys/misc/bin/
+export COOLSPINNER='⠁⠂⠄⡀⢀⠠⠐⠈'
