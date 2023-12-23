@@ -1,4 +1,4 @@
-#!/bin/ksh
+#!/bin/sh
 
 if [ -n "$1" ]; then
     location="$1"
