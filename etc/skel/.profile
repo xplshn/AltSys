@@ -1,9 +1,10 @@
-export COOLHOME=">" # Tweak to your liking. Use U+200B for a "silent" hPWD when at $HOME. See: cat $(whoch pwd)
+export COOLHOME=">" # Tweak to your liking. Use U+200B for a "silent" hPWD when at $HOME. See: cat $(whoch hpwd)
 export POSIXLY_CORRECT=1
 export ENV="$HOME/.shrc"
+export LOCATION="Berkeley" # For weather information using the wttr command.
 export PF_INFO="ascii title os host kernel uptime shell pkgs memory"
 export PF_COL1=4
 export PF_SEP="@→"
 export SHELL="$0"
-#export COOLSPINNER='|~/-\' # For a BSD styled spinner animation in most scripts at /opt/AltSys/misc/bin/
-export COOLSPINNER='⠁⠂⠄⡀⢀⠠⠐⠈'
+export COOLSPINNER='|~/-\' # For a BSD styled spinner animation in most scripts at /opt/AltSys/misc/bin/
+export COOLSPINNER_COLOR='\033[32m' # Green spinner/loading animation.
