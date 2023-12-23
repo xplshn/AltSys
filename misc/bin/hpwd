@@ -1,9 +1,13 @@
-#!/bin/sh
+#!/bin/dash
 
 # Function to abbreviate directories under $HOME
 path() {
     if [ "$PWD" = "$HOME" ]; then
-        printf "~"  # Display '~' if in home directory
+        if [ -n "$COOLHOME" ]; then
+                printf "$COOLHOME"
+        else
+                printf "~"  # Display '~' if in home directory
+        fi
     elif [ "${PWD#$HOME/}" != "$PWD" ]; then
         printf "~/${PWD#$HOME/} "  # Display '~/...' for directories inside home
     else
