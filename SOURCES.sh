@@ -1,4 +1,4 @@
-#!/bin/ksh
+#!/bin/sh
 
 # ANSI color codes
 RED='\033[0;31m'
