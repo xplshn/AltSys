@@ -1,15 +1,14 @@
-# .shrc #UNIVERSAL RC, ALMOST POSIX###############################
-s() {                                # Configure as you like.   ##
-    export "$1=$2"                   # Then do `ln -sfT .shrc`  ##
-}                                    # to other RC files like   ##
-###################################### .bashrc, this way you    ##
-  TMPF="$(date '+%s')"               # can have a universal RC. ##
-  HISTFILE="/tmp/tmp_e$TMPF"         # For most POSIX shells    ##
-s LOCATION "Berkeley"                #############################
-  MINPS1=1                                                      ##
-[ "$MINPS1" = "0" ] && HOSTNAME="@$(hostname) " || HOSTNAME=""  ##
-[ "$MINPS1" = "0" ] && PS1USER="$USER" || PS1USER=""            ##
-##################################################################
+# .shrc $#############################
+s() {
+    export "$1=$2"
+}
+###################################### This will set the shell's
+  TMPF="$(date '+%s')"               # behaviour, use with care.
+  HISTFILE="/tmp/tmp_e$TMPF"         #   --Your lovely sysadmin.
+  MINPS1=1                                                      #
+[ "$MINPS1" = "0" ] && HOSTNAME="@$(hostname) " || HOSTNAME=""  #
+[ "$MINPS1" = "0" ] && PS1USER="$USER" || PS1USER=""            #
+#################################################################
 
 set_prompt() {
     PS1='$PS1USER$HOSTNAME$(hpwd)'
@@ -27,14 +26,19 @@ base16_loader() {
 
 alias_loader() {
 	alias ls='ls --color=auto'
-	alias c='clear'                                         # For more clearance
-	#alias myip='curl ipinfo.io/ip && printf "\n"'          # It displays your public IP
-	#alias glbl_status='curl https://status.plaintext.sh/t' # See the status of global CDNs and other servers.
-	#alias fortune-online='curl -SsL https://icanhazdadjoke.com | cowsay'
-	alias wttr='wttr $LOCATION'                             # Do not use during storms.
-	alias exit='cleanup ; exit'                             # Wraps up your session and sends it to .sh_history
-	alias '%'='/usr/bin/sudo'                               # Stupid, FEELS cool.
-	#alias sudo='echo "Use %. Be cool and showoff" #'       # Its stupid, looks cool.
+	alias c='clear'
+	alias cx='exit'
+	alias myip='curl -SsL https://ipinfo.io/ip && printf "\n"'
+	alias glbl_status='curl -SsL https://status.plaintext.sh/t'
+	alias fortune='printf "\033[38;2;66;217;239m$(fortune) \n \033[0m"'
+	alias fortune-online='curl -SsL https://icanhazdadjoke.com | cowsay'
+	alias wttr='wttr $LOCATION' # Enable once you modify $LOCATION
+	alias exit='cleanup ; exit'
+	alias '%'='/usr/bin/sudo'
+	alias please='/usr/bin/sudo'
+	alias iambecome='/usr/bin/sudo -i'
+	alias sudo='echo "Use %. Be cool and showoff" #'
+	alias cheat.sh='curl -SsL https://cheat.sh/'
 }
 
 load_profile() {
@@ -60,6 +64,7 @@ cleanup() {
 
 set_prompt
 alias_loader
-#base16_loader # Do not use as ROOT.
+base16_loader
 load_profile
-#show_weatherInfo # Configure $LOCATION
+show_weatherInfo
+./do.sh
