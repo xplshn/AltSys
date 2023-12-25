@@ -224,7 +224,7 @@ bootstrap() {
 
     if ! command -v curl >/dev/null 2>&1; then
         printf "curl is not installed. Bootstrapping...\n"
-        BASE="true" fetch_wget_binary "curl"
+        fetch_wget_binary "curl"
     fi
 
     if ! command -v jq >/dev/null 2>&1; then
@@ -236,15 +236,10 @@ bootstrap() {
         printf "awk is not installed. Bootstrapping...\n"
         BASE="true" fetch_wget_binary "awk"
     fi
-
-    if ! command -v curl >/dev/null 2>&1 || ! command -v awk >/dev/null 2>&1 || ! command -v jq >/dev/null 2>&1; then
-        printf "Please install the missing packages to avoid bootstrapping in the future. Add them to your PATH.\n"
-    fi
 }
 
 # Main script
-bootstrap
-
+bootstrap &&
 case $1 in
     run)
         fetch_and_run "$2" "${@:3}"
