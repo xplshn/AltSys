@@ -103,21 +103,21 @@ if ! CC="$TOYBOX_CC" CXX="$TOYBOX_CXX" CFLAGS="$TOYBOX_CFLAGS" PREFIX="$TOYBOX_P
     cat toybox_build.log
     exit 1
 fi
-cd .. || exit 1
+cd .. || exit 1 &&
 printf "${GREEN}OK:${NC} Installed ${GREEN}toybox${NC} at ${MAGENTA}/opt/AltSys/toybox/${NC}\n"
 
 # Clone Busybox repository
 clone_or_update_repo "busybox" "https://git.busybox.net/busybox/"
 # Build and install Busybox
-sh apply_patches.sh
 cd busybox || exit 1
 cp -u "${FILESDIR}/busybox_config" .config
-if ! CC="$BUSYBOX_CC" CXX="$BUSYBOX_CXX" CFLAGS="$BUSYBOX_CFLAGS" PREFIX="$BUSYBOX_PREFIX" LD="BUSYBOX_LD" make -j"$THREADS" install > busybox_build.log; then
+if ! CC="$BUSYBOX_CC" CXX="$BUSYBOX_CXX" CFLAGS="$BUSYBOX_CFLAGS" LD="BUSYBOX_LD" make -j"$THREADS" CONFIG_PREFIX="$BUSYBOX_PREFIX" install > busybox_build.log; then
     printf "Building busybox failed.\n"
     cat busybox_build.log
     exit 1
 fi
-cd .. || exit 1
+#rm /opt/busybox/linuxrc
+cd .. || exit 1 &&
 printf "${GREEN}OK:${NC} Installed ${GREEN}busybox${NC} at ${MAGENTA}/opt/AltSys/busybox/${NC}\n"
 
 # Clone Ubase repository
@@ -130,7 +130,7 @@ if ! CC="$UBASE_CC" CFLAGS="$UBASE_CFLAGS" LD="$UBASE_LD" PREFIX="$UBASE_PREFIX"
     cat ubase_build.log
     exit 1
 fi
-cd .. || exit 1
+cd .. || exit 1 &&
 printf "${GREEN}OK:${NC} Installed ${GREEN}ubase${NC} at ${MAGENTA}/opt/AltSys/obase/ubase/${NC}\n"
 printf "${GREEN}OK:${NC} ${GREEN}ubase${NC}'s manpages are at ${MAGENTA}/opt/AltSys/obase/ubase/share/man/${NC}\n"
 
