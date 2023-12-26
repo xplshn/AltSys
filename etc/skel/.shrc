@@ -30,15 +30,12 @@ alias_loader() {
 	alias cx='exit'
 	alias myip='curl -SsL https://ipinfo.io/ip && printf "\n"'
 	alias glbl_status='curl -SsL https://status.plaintext.sh/t'
-	alias fortune='printf "\033[38;2;66;217;239m$(fortune) \n \033[0m"'
 	alias fortune-online='curl -SsL https://icanhazdadjoke.com | cowsay'
 	alias wttr='wttr $LOCATION' # Enable once you modify $LOCATION
 	alias exit='cleanup ; exit'
 	alias '%'='/usr/bin/sudo'
 	alias please='/usr/bin/sudo'
 	alias iambecome='/usr/bin/sudo -i'
-	alias sudo='echo "Use %. Be cool and showoff" #'
-	alias cheat.sh='curl -SsL https://cheat.sh/'
 }
 
 load_profile() {
@@ -64,7 +61,6 @@ cleanup() {
 
 set_prompt
 alias_loader
-base16_loader
+#base16_loader
 load_profile
-show_weatherInfo
-./do.sh
+#show_weatherInfo
