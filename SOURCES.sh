@@ -9,8 +9,6 @@ CYAN='\033[0;36m'
 MAGENTA='\033[0;35m'
 NC='\033[0m' # No Color
 
-# Updated content reflecting changes from SOURCES file
-printf '%b' "${RED}[anto@beef ~/Documents]@ cat dev/AltSys/opt/SOURCES${NC}\n"
 printf '%b' "${GREEN}core:${NC} doas                            : ${CYAN}https://github.com/slicer69/doas${NC}        |${BLUE}commit: e9bee5f17210a97a40c6cdc130740fa2d70f9b0e${NC}\n"
 printf '%b' "${YELLOW}misc:${NC} fortune                         : ${CYAN}https://github.com/cafkafk/fortune-kind${NC} |${BLUE}commit: 120798bf41c5b0b28fdd9025bf8b1ebe2d2193c7${NC}\n"
 printf '%b' "${YELLOW}misc:${NC} pfetch                          : ${CYAN}https://github.com/OldWorldOrdr/pfetch${NC}  - MODIFIED artwork from this PR: ${CYAN}https://github.com/OldWorldOrdr/pfetch/pull/7${NC}\n"

@@ -9,6 +9,9 @@ NC='\033[0m' # No Color
 THREADS="${THREADS:-1}"
 FILESDIR="$PWD"
 AR="ar"
+LD="mold"
+LDFLAGS="-static -L/usr/lib/libc.a"
+
 SBASE_CC="clang"
 SBASE_CFLAGS="-g -static -O2 -pipe -fPIE"
 SBASE_LD="ld"
@@ -16,12 +19,18 @@ SBASE_LD="ld"
 TOYBOX_CC="clang"
 TOYBOX_CXX="clang++"
 TOYBOX_CFLAGS="-g -static -O2 -pipe -fPIE"
+TOYBOX_LD="$LD"
 TOYBOX_PREFIX="/opt/AltSys/toybox/"
-TOYBOX_LD="ld"
+
+BUSYBOX_CC="clang"
+BUSYBOX_CXX="clang++"
+BUSYBOX_CFLAGS="-g -static -O2 -pipe -fPIE"
+BUSYBOX_LD="$LD"
+BUSYBOX_PREFIX="/opt/AltSys/busybox"
 
 UBASE_CC="clang"
 UBASE_CFLAGS="-g -static -O2 -pipe -fPIE"
-UBASE_LD="ld"
+UBASE_LD="$LD"
 UBASE_PREFIX="/opt/AltSys/obase/ubase"
 UBASE_MANPREFIX="/opt/AltSys/obase/ubase/share/man"
 
@@ -94,9 +103,22 @@ if ! CC="$TOYBOX_CC" CXX="$TOYBOX_CXX" CFLAGS="$TOYBOX_CFLAGS" PREFIX="$TOYBOX_P
     cat toybox_build.log
     exit 1
 fi
-
 cd .. || exit 1
 printf "${GREEN}OK:${NC} Installed ${GREEN}toybox${NC} at ${MAGENTA}/opt/AltSys/toybox/${NC}\n"
+
+# Clone Busybox repository
+clone_or_update_repo "busybox" "https://git.busybox.net/busybox/"
+# Build and install Busybox
+sh apply_patches.sh
+cd busybox || exit 1
+cp -u "${FILESDIR}/busybox_config" .config
+if ! CC="$BUSYBOX_CC" CXX="$BUSYBOX_CXX" CFLAGS="$BUSYBOX_CFLAGS" PREFIX="$BUSYBOX_PREFIX" LD="BUSYBOX_LD" make -j"$THREADS" install > busybox_build.log; then
+    printf "Building busybox failed.\n"
+    cat busybox_build.log
+    exit 1
+fi
+cd .. || exit 1
+printf "${GREEN}OK:${NC} Installed ${GREEN}busybox${NC} at ${MAGENTA}/opt/AltSys/busybox/${NC}\n"
 
 # Clone Ubase repository
 clone_or_update_repo "ubase" "https://git.suckless.org/ubase/"
