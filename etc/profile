@@ -1,5 +1,5 @@
 PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/AltSys/toybox/usr/sbin:/opt/AltSys/misc/bin"
-PATH="/opt/AltSys/core/usr/bin:/opt/AltSys/toybox/bin:/opt/AltSys/toybox/sbin:/opt/AltSys/toybox/usr/bin:/opt/AltSys/toybox/usr/sbin/:/opt/AltSys/obase/ubase/bin:/opt/AltSys/obase/sbase/bin:$PATH"
+PATH="/opt/AltSys/core/usr/bin:/opt/AltSys/busybox/bin:/opt/AltSys/busybox/sbin:/opt/AltSys/usr/bin:/opt/AltSys/usr/sbin:/opt/AltSys/toybox/bin:/opt/AltSys/toybox/sbin:/opt/AltSys/toybox/usr/bin:/opt/AltSys/toybox/usr/sbin/:/opt/AltSys/obase/ubase/bin:/opt/AltSys/obase/sbase/bin:$PATH"
 # NOTE. For a more POSIXy shell, make obase take presedence and run the cleanup.sh script(WARNING, will delete duplicates that obase provides from toybox.)
 # NOTE: Toybox codebase, while notably larger and cumbersome, is still more secure and the behaviour of the tools is much more predictable than the ones suckless.org provices.
 
