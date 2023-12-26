@@ -1,5 +1,6 @@
 #!/bin/sh
 
+get_weatherData() {
 if [ -n "$1" ]; then
     location="$1"
      if [ -n "$2" ]; then
@@ -9,5 +10,27 @@ if [ -n "$1" ]; then
     fi
     curl --silent "wttr.in/$location?$params"
 else
-    echo "No location provided. Usage: wttr <location> <params[see curl wttr.in/:help]>"
+    printf "No location provided. Usage: wttr <location> <params[see curl wttr.in/:help]>\n"
 fi
+}
+
+main () {
+  # Start and capture.
+  get_weatherData "$1" "$2" > /tmp/._alt_wttr.txt & wttr_pid=$!
+
+  # Show spinner animation while pfetch is running
+  source $(which .std.h.sh)
+  spinner & spinner_pid=$!
+
+  # Wait for it to finish
+  wait $wttr_pid
+
+  # Once its output is ready, kill the spinner and display the output
+  kill $spinner_pid >/dev/null 2>&1
+
+  # Clear spinner output
+  printf "\b   \b\b\b"
+}
+  # Show output and cleanup
+  main "$1" "$2"
+  cat /tmp/._alt_wttr.txt ; rm /tmp/._alt_wttr.txt

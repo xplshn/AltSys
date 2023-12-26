@@ -2,32 +2,32 @@
 
 # Function to display usage
 show_usage() {
-    echo "Usage: $(basename "$0") <command>" >&2
+    printf "Usage: $(basename "$0") <command>\n" >&2
 }
 
 # Function to validate the command
 validate_command() {
     case $1 in
-        *[![:alnum:]_-]* | "") return 1 ;; # Rejects non-alphanumeric, underscores, and hyphens
-        *) return 0 ;; # Allows only alphanumeric, underscores, and hyphens
+        *[![:alnum:]._-]* | "") return 1 ;; # Rejects characters other than alphanumeric, dot, underscores, and hyphens
+        *) return 0 ;; # Allows alphanumeric, dot, underscores, and hyphens
     esac
 }
 
 # Function to search for the command in PATH
 search_command_in_path() {
-    local command_to_find="$1"
-    local found=false
+    command_to_find="$1"
+    found=false
 
     IFS=:
     for dir in $PATH; do
         if [ -x "$dir/$command_to_find" ]; then
-            echo "$dir/$command_to_find"
+            printf "%s/%s\n" "$dir" "$command_to_find"
             found=true
         fi
     done
 
     if [ "$found" = false ]; then
-        echo "Command '$command_to_find' not found in PATH" >&2
+        printf "Command '%s' not found in PATH\n" "$command_to_find" >&2
         exit 1
     fi
 }
@@ -40,7 +40,7 @@ main() {
     fi
 
     if ! validate_command "$1"; then
-        echo "Invalid command format. Please provide an alphanumeric command name only." >&2
+        printf "Invalid command format. Please provide an alphanumeric command name with dots, underscores, or hyphens only.\n" >&2
         exit 1
     fi
 
